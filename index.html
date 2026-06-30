@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اجتماع القديس يوحنا الحبيب</title>
+    
+    <!-- Import Google Font: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Variables for theming */
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #d35400;
+            --reminder-color: #c0392b;
+            --bg-gradient: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* Glassmorphism Card Style */
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 24px;
+            padding: 40px 30px;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            
+            /* Entrance Animation */
+            opacity: 0;
+            transform: translateY(40px);
+            animation: slideUpFade 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        /* Church Icon / Emoji */
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            animation: softBounce 2s infinite alternate;
+        }
+
+        /* Meeting Title */
+        .title {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            border-bottom: 2px dashed rgba(211, 84, 0, 0.3);
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+
+        /* Message Content */
+        .message-container {
+            /* Slight delay for text appearance */
+            opacity: 0;
+            animation: fadeInText 1s ease 0.4s forwards;
+        }
+
+        .main-message {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            line-height: 1.7;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .reminder {
+            color: var(--reminder-color);
+            font-size: 1.05rem;
+            font-weight: 700;
+            background: rgba(253, 160, 133, 0.15);
+            padding: 12px 15px;
+            border-radius: 12px;
+            display: inline-block;
+            line-height: 1.6;
+        }
+
+        /* Keyframe Animations */
+        @keyframes slideUpFade {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fadeInText {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes softBounce {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-8px);
+            }
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 400px) {
+            .card {
+                padding: 30px 20px;
+            }
+            .title {
+                font-size: 1.3rem;
+            }
+            .main-message {
+                font-size: 1.15rem;
+            }
+            .reminder {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="icon">✨⛪✨</div>
+        <h1 class="title">اجتماع القديس يوحنا الحبيب</h1>
+        <div id="message-container" class="message-container">
+            <!-- JavaScript will inject the random message here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // 15 distinct, friendly Egyptian Arabic messages
+            const messages = [
+                "وحشتنا جداً ومكانك كان فاضي، الاجتماع مش بيكمل من غيرك.",
+                "يا بختنا بيك وبوجودك وسطنا، مفتقدينك بجد ونفسنا نشوفك.",
+                "غيابك طال ومكانك لسه محفوظ، متتأخرش علينا أكتر من كده!",
+                "بقالنا كتير مشفناكش، واليوم اللي بتيجي فيه بيفرحنا كلنا.",
+                "لو تعرف غلاوتك عندنا مش هتغيب عننا أبداً، وحشتنا يا غالي.",
+                "ربنا يفرح قلبك دايماً، بس فرحتنا إحنا بتكمل لما بنشوفك وسطنا.",
+                "بنفتقد ضحكتك وروحك الحلوة، يالا مستنيين نشوفك قريب جداً.",
+                "مهما كانت مشاغلك، صدقني قعدتنا سوا بتفرق كتير، مكانك مستنيك.",
+                "إنت جزء مهم من عيلتنا، والعيلة دي مش بتكمل من غيرك. وحشتنا!",
+                "عينينا بتدور عليك في كل اجتماع، متخليناش نستنى كتير بقى.",
+                "وحشتنا يا جميل، مفيش أي حاجة تعوض غيابك عننا.",
+                "سلامك وابتسامتك بيفرقوا معانا، مفتقدينهم ومفتقدينك أوي.",
+                "اليوم اللي بتغيب فيه بيبان أوي، عايزين نشوفك ونطمن عليك بجد.",
+                "متخيلتش إن غيابك هيسيب الفراغ ده كله، افتقدناك بجد.",
+                "ربنا معاك في كل خطواتك، بس إحنا كمان طمعانين في وقتك معانا."
+            ];
+
+            // The mandatory exact ending for every message
+            const exactReminder = "(مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)";
+
+            // Select a random message
+            const randomIndex = Math.floor(Math.random() * messages.length);
+            const selectedMessage = messages[randomIndex];
+
+            // Inject into DOM
+            const container = document.getElementById("message-container");
+            
+            // Rendered with separated tags for better UI/UX readability while fully maintaining the copy requirements
+            container.innerHTML = `
+                <p class="main-message">${selectedMessage}</p>
+                <span class="reminder">${exactReminder}</span>
+            `;
+        });
+    </script>
+</body>
+</html>
