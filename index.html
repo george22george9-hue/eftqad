@@ -5,193 +5,815 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>اجتماع القديس يوحنا الحبيب</title>
     
-    <!-- Import Google Font: Cairo -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-    
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        /* CSS Variables for theming */
+        /* Modern Reset and CSS Custom Properties */
         :root {
-            --primary-color: #2c3e50;
-            --accent-color: #d35400;
-            --reminder-color: #c0392b;
-            --bg-gradient: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            --primary: #d946ef;
+            --primary-dark: #c084fc;
+            --accent: #f59e0b;
+            --accent-light: #fef3c7;
+            --text-dark: #1e1b4b;
+            --text-muted: #4f46e5;
+            --bg-gradient: linear-gradient(135deg, #fdf2f8 0%, #fef3c7 50%, #eef2ff 100%);
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-border: rgba(255, 255, 255, 0.6);
+            --shadow: 0 20px 40px rgba(79, 70, 229, 0.08);
+            --font-family: 'Cairo', system-ui, -apple-system, sans-serif;
         }
 
-        /* Reset & Base Styles */
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Cairo', sans-serif;
+            font-family: var(--font-family);
             background: var(--bg-gradient);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            position: relative;
             padding: 20px;
-            overflow: hidden;
         }
 
-        /* Glassmorphism Card Style */
-        .card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 24px;
-            padding: 40px 30px;
-            max-width: 450px;
+        /* Decorative animated background elements */
+        .bg-blobs {
+            position: absolute;
             width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: float 25s infinite alternate ease-in-out;
+        }
+
+        .blob-1 {
+            width: 350px;
+            height: 350px;
+            background: #f472b6;
+            top: -100px;
+            left: -100px;
+            animation-duration: 20s;
+        }
+
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background: #fbbf24;
+            bottom: -150px;
+            right: -100px;
+            animation-delay: -5s;
+            animation-duration: 25s;
+        }
+
+        .blob-3 {
+            width: 300px;
+            height: 300px;
+            background: #818cf8;
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.3;
+            animation-delay: -10s;
+            animation-duration: 30s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, 30px) scale(1.1); }
+            100% { transform: translate(-30px, -50px) scale(0.9); }
+        }
+
+        /* Main Container */
+        .container {
+            width: 100%;
+            max-width: 480px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Header Details */
+        .header {
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
-            
-            /* Entrance Animation */
-            opacity: 0;
-            transform: translateY(40px);
-            animation: slideUpFade 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            margin-bottom: 24px;
+            animation: fadeInDown 1s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
-        /* Church Icon / Emoji */
-        .icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            animation: softBounce 2s infinite alternate;
+        .logo-container {
+            width: 90px;
+            height: 90px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 16px;
+            box-shadow: 0 10px 25px rgba(217, 70, 239, 0.15);
+            border: 3px solid #fff;
+            position: relative;
         }
 
-        /* Meeting Title */
-        .title {
-            color: var(--accent-color);
-            font-size: 1.5rem;
+        .logo-container::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border-radius: 50%;
+            border: 2px dashed rgba(217, 70, 239, 0.4);
+            animation: spin 30s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(-360deg); }
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
             font-weight: 800;
-            margin-bottom: 25px;
-            border-bottom: 2px dashed rgba(211, 84, 0, 0.3);
-            padding-bottom: 15px;
-            display: inline-block;
+            color: #4f46e5;
+            margin-bottom: 4px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
-        /* Message Content */
-        .message-container {
-            /* Slight delay for text appearance */
-            opacity: 0;
-            animation: fadeInText 1s ease 0.4s forwards;
-        }
-
-        .main-message {
-            color: var(--primary-color);
-            font-size: 1.3rem;
-            line-height: 1.7;
+        .header p {
+            font-size: 0.95rem;
+            color: #6b7280;
             font-weight: 600;
-            margin-bottom: 25px;
         }
 
-        .reminder {
-            color: var(--reminder-color);
-            font-size: 1.05rem;
-            font-weight: 700;
-            background: rgba(253, 160, 133, 0.15);
-            padding: 12px 15px;
-            border-radius: 12px;
-            display: inline-block;
-            line-height: 1.6;
+        /* Glassmorphism Message Card */
+        .card {
+            width: 100%;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            padding: 35px 25px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            position: relative;
+            transform-origin: center;
+            animation: cardEntrance 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
         }
 
-        /* Keyframe Animations */
-        @keyframes slideUpFade {
-            from {
+        @keyframes cardEntrance {
+            0% {
                 opacity: 0;
-                transform: translateY(40px) scale(0.95);
+                transform: translateY(60px) scale(0.9);
             }
-            to {
+            100% {
                 opacity: 1;
                 transform: translateY(0) scale(1);
             }
         }
 
-        @keyframes fadeInText {
+        /* Decorative quotation mark */
+        .quote-icon {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 5rem;
+            color: rgba(217, 70, 239, 0.08);
+            font-family: serif;
+            line-height: 0;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Message Text Styles */
+        .message-box {
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .message-text {
+            font-size: 1.35rem;
+            line-height: 1.8;
+            font-weight: 600;
+            color: #312e81;
+            text-shadow: 0 1px 1px rgba(255,255,255,0.8);
+        }
+
+        /* Invitation Box Styles */
+        .invitation-box {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(245, 158, 11, 0.08) 100%);
+            border: 1px dashed rgba(245, 158, 11, 0.4);
+            border-radius: 18px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-align: right;
+            transition: all 0.4s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.01);
+        }
+
+        .invitation-box:hover {
+            transform: translateY(-2px);
+            border-color: rgba(245, 158, 11, 0.7);
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(245, 158, 11, 0.12) 100%);
+        }
+
+        .invitation-icon {
+            background: #f59e0b;
+            color: white;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+        }
+
+        .invitation-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-weight: 700;
+            color: #78350f;
+        }
+
+        /* Action Buttons */
+        .actions {
+            margin-top: 10px;
+        }
+
+        .btn-refresh {
+            background: linear-gradient(135deg, #818cf8 0%, #4f46e5 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-family: var(--font-family);
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.25);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-refresh::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+        }
+
+        .btn-refresh:hover::after {
+            transform: translateX(100%);
+            transition: transform 0.6s ease;
+        }
+
+        .btn-refresh:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 15px 25px rgba(79, 70, 229, 0.35);
+            background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+        }
+
+        .btn-refresh:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        .btn-refresh svg {
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .btn-refresh:hover svg {
+            transform: rotate(-180deg);
+        }
+
+        /* Footer info */
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #71717a;
+            font-weight: 600;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        .footer span {
+            color: #ec4899;
+        }
+
+        /* Fade transitions for javascript dynamic loads */
+        .fade-out {
+            opacity: 0;
+            transform: translateY(-10px) scale(0.97);
+        }
+        
+        .fade-in {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Confetti canvas */
+        #confetti-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* Additional Animations */
+        @keyframes fadeInDown {
             from {
                 opacity: 0;
+                transform: translateY(-20px);
             }
             to {
                 opacity: 1;
-            }
-        }
-
-        @keyframes softBounce {
-            from {
                 transform: translateY(0);
             }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
             to {
-                transform: translateY(-8px);
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        /* Mobile Adjustments */
-        @media (max-width: 400px) {
+        /* Mobile specific enhancements */
+        @media (max-width: 480px) {
+            body {
+                padding: 16px;
+            }
+            
             .card {
                 padding: 30px 20px;
             }
-            .title {
-                font-size: 1.3rem;
+
+            .message-text {
+                font-size: 1.2rem;
             }
-            .main-message {
-                font-size: 1.15rem;
+
+            .header h1 {
+                font-size: 1.45rem;
             }
-            .reminder {
-                font-size: 0.95rem;
+        }
+
+        /* --- Dark Mode Variables and Styling Overrides --- */
+        body.dark {
+            --text-dark: #f8fafc;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #020617 100%);
+            --card-bg: rgba(15, 23, 42, 0.65);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        body.dark .header h1 {
+            color: #c084fc;
+        }
+
+        body.dark .header p {
+            color: #9ca3af;
+        }
+
+        body.dark .logo-container {
+            background: #1e1b4b;
+            border-color: #1e1b4b;
+            box-shadow: 0 10px 25px rgba(192, 132, 252, 0.15);
+        }
+
+        body.dark .logo-container::after {
+            border-color: rgba(192, 132, 252, 0.4);
+        }
+
+        body.dark .logo-container svg path[fill="#fdf2f8"] {
+            fill: #1e1b4b;
+            stroke: #c084fc;
+        }
+
+        body.dark .logo-container svg path[stroke="#4f46e5"] {
+            stroke: #c084fc;
+        }
+
+        body.dark .message-text {
+            color: #f1f5f9;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+        }
+
+        body.dark .invitation-box {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        body.dark .invitation-text {
+            color: #fde68a;
+        }
+
+        body.dark .footer {
+            color: #9ca3af;
+        }
+
+        body.dark .blob-1 { background: #db2777; }
+        body.dark .blob-2 { background: #b45309; }
+        body.dark .blob-3 { background: #4338ca; }
+
+        /* Floating Theme Toggle Switch UI */
+        .theme-toggle-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .btn-theme-toggle {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: #4f46e5;
+        }
+
+        .btn-theme-toggle:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-theme-toggle:active {
+            transform: scale(0.95);
+        }
+
+        .btn-theme-toggle .icon-sun {
+            display: none;
+        }
+
+        .btn-theme-toggle .icon-moon {
+            display: block;
+        }
+
+        body.dark .btn-theme-toggle {
+            background: rgba(15, 23, 42, 0.6);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #fbbf24;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark .btn-theme-toggle .icon-sun {
+            display: block;
+        }
+
+        body.dark .btn-theme-toggle .icon-moon {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .theme-toggle-container {
+                top: 15px;
+                right: 15px;
+            }
+            .btn-theme-toggle {
+                width: 40px;
+                height: 40px;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <div class="icon">✨⛪✨</div>
-        <h1 class="title">اجتماع القديس يوحنا الحبيب</h1>
-        <div id="message-container" class="message-container">
-            <!-- JavaScript will inject the random message here -->
-        </div>
+    <!-- Floating Dark Mode Toggle Button -->
+    <div class="theme-toggle-container">
+        <button class="btn-theme-toggle" id="btn-theme-toggle" aria-label="تبديل المظهر">
+            <!-- Sun Icon (shown in dark mode) -->
+            <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <!-- Moon Icon (shown in light mode) -->
+            <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </button>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // 15 distinct, friendly Egyptian Arabic messages
-            const messages = [
-                "وحشتنا جداً ومكانك كان فاضي، الاجتماع مش بيكمل من غيرك.",
-                "يا بختنا بيك وبوجودك وسطنا، مفتقدينك بجد ونفسنا نشوفك.",
-                "غيابك طال ومكانك لسه محفوظ، متتأخرش علينا أكتر من كده!",
-                "بقالنا كتير مشفناكش، واليوم اللي بتيجي فيه بيفرحنا كلنا.",
-                "لو تعرف غلاوتك عندنا مش هتغيب عننا أبداً، وحشتنا يا غالي.",
-                "ربنا يفرح قلبك دايماً، بس فرحتنا إحنا بتكمل لما بنشوفك وسطنا.",
-                "بنفتقد ضحكتك وروحك الحلوة، يالا مستنيين نشوفك قريب جداً.",
-                "مهما كانت مشاغلك، صدقني قعدتنا سوا بتفرق كتير، مكانك مستنيك.",
-                "إنت جزء مهم من عيلتنا، والعيلة دي مش بتكمل من غيرك. وحشتنا!",
-                "عينينا بتدور عليك في كل اجتماع، متخليناش نستنى كتير بقى.",
-                "وحشتنا يا جميل، مفيش أي حاجة تعوض غيابك عننا.",
-                "سلامك وابتسامتك بيفرقوا معانا، مفتقدينهم ومفتقدينك أوي.",
-                "اليوم اللي بتغيب فيه بيبان أوي، عايزين نشوفك ونطمن عليك بجد.",
-                "متخيلتش إن غيابك هيسيب الفراغ ده كله، افتقدناك بجد.",
-                "ربنا معاك في كل خطواتك، بس إحنا كمان طمعانين في وقتك معانا."
-            ];
+    <!-- Confetti effect context -->
+    <canvas id="confetti-canvas"></canvas>
 
-            // The mandatory exact ending for every message
-            const exactReminder = "(مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)";
+    <!-- Background decorative blurred blobs -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
 
-            // Select a random message
-            const randomIndex = Math.floor(Math.random() * messages.length);
-            const selectedMessage = messages[randomIndex];
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <!-- Glowing Elegant Cross & Heart SVG Symbol -->
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Heart symbol background -->
+                    <path d="M12 21C12 21 3 14.5 3 8.5C3 5.5 5.5 3 8.5 3C10.28 3 11.85 3.86 12 5C12.15 3.86 13.72 3 15.5 3C18.5 3 21 5.5 21 8.5C21 14.5 12 21 12 21Z" fill="#fdf2f8" stroke="#d946ef" stroke-width="1.5" stroke-linejoin="round"/>
+                    <!-- Elegant Cross in the center -->
+                    <path d="M12 6V16" stroke="#4f46e5" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M9 9H15" stroke="#4f46e5" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h1>اجتماع القديس يوحنا الحبيب</h1>
+            <p>رسالة حب دافية مستنياك</p>
+        </header>
 
-            // Inject into DOM
-            const container = document.getElementById("message-container");
+        <!-- Message Card -->
+        <main class="card">
+            <!-- Decorative quote icon -->
+            <div class="quote-icon">”</div>
             
-            // Rendered with separated tags for better UI/UX readability while fully maintaining the copy requirements
-            container.innerHTML = `
-                <p class="main-message">${selectedMessage}</p>
-                <span class="reminder">${exactReminder}</span>
-            `;
+            <!-- Message container -->
+            <div class="message-box" id="message-box">
+                <p class="message-text" id="message-text">
+                    جاري تحميل رسالتك بكل حب...
+                </p>
+            </div>
+
+            <!-- Invitation Callout Box -->
+            <div class="invitation-box" id="invitation-box">
+                <div class="invitation-icon">
+                    <!-- Calendar Icon -->
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                </div>
+                <div class="invitation-text" id="invitation-text">
+                    (مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)
+                </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="actions">
+                <button class="btn-refresh" id="btn-refresh">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                    </svg>
+                    <span>شوف رسالة تانية</span>
+                </button>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            صُنع بكل حب <span>♥</span> في اجتماع القديس يوحنا الحبيب
+        </footer>
+    </div>
+
+    <!-- JavaScript logic -->
+    <script>
+        // 15 distinct welcoming and friendly Egyptian Colloquial Arabic messages
+        // Every single message ends with the EXACT requested string:
+        // "(مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)"
+        const messages = [
+            "وحشتنا جداً بجد! مكانك فاضي ومفتقدين ضحكتك وجودك معانا.. يا رب تكون بأحسن حال ودايماً منور حياتنا. (مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)",
+            "عامل إيه؟ بقالنا كتير ماشفناكش، واللمة من غيرك ناقصة حاجة حلوة. طمنا عليك ويارب تكون كل أمورك تمام. (مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)",
+            "يا صديقي الغالي، وحشتنا بجد! بنفكر فيك وندعيلك دايماً، ومتشوقين نشوفك قريب وندردش سوا. (مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)",
+            "عساك بخير يا غالي. غيبتك طالت ومفتقدين مشاركتك ورأيك الجميل في كل حاجة بنعملها. طمن قلوبنا عليك. (مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)",
+            "الضحكة الحلوة والقلب الطيب.. وحشتنا جداً ومفتقدين وجودك اللي بيملا المكان بهجة ودفا. (مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)",
+            "خطوة عزيزة ووحشة كبيرة! بجد بنتمنى تكون مبسوط وفي أفضل حال، ودايماً مكانك محفوظ في قلوبنا. (مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)",
+            "وحشتنا يا طيب. بنسأل عليك ودايماً على البال، ونتمنى الأيام دي تكون شايلالك كل خير ونجاح. (مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)",
+            "سؤال سريع من قلب محب: عامل إيه؟ وحشتنا جداً وحابين نطمن عليك وعلى كل تفاصيلك. يارب تكون بخير. (مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)",
+            "يا غالي على قلوبنا، مكانك لسه مستني حضورك المميز اللي بيدينا طاقة إيجابية. وحشتنا بجد! (مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)",
+            "غيبتك علينا صعبة، واللمة مش بتكمل غير بيك وبكلامك اللي بيدخل القلب علطول. وحشتنا يا غالي. (مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)",
+            "بنبعتلك سلام دافي من كل قلوبنا، بنقولك فيه إنك وحشتنا جداً ومفتقدينك فوق ما تتخيل. (مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)",
+            "يا رب تكون بخير وفي أحسن حال. وحشتنا جداً ودايماً بنفتكر أيامنا الحلوة سوا ونتمنى تتكرر قريب. (مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)",
+            "عامل إيه وطمنا عليك؟ بجد وحشتنا ووجودك فارق معانا ومع كل حد فينا. يارب تكون بألف خير. (مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)",
+            "صديقنا الجميل، وحشتنا أوي أوي! طمنا على أحوالك، ودايماً مكانك دافي ومستنيك ببهجتك المعتادة. (مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)",
+            "بقالنا كتير ما سمعناش صوتك ولا شفناك.. وحشتنا جداً ودايماً بندعيلك بالسلام والراحة في كل خطواتك. (مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)"
+        ];
+
+        // DOM elements
+        const messageBox = document.getElementById('message-box');
+        const messageText = document.getElementById('message-text');
+        const invitationText = document.getElementById('invitation-text');
+        const btnRefresh = document.getElementById('btn-refresh');
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Track last chosen index to prevent immediate repetitions
+        let lastIndex = -1;
+
+        // Function to extract greeting text and invitation text from complete string
+        function parseMessage(fullMsg) {
+            const invitationTag = "(مستنيينك";
+            const index = fullMsg.indexOf(invitationTag);
+            if (index !== -1) {
+                return {
+                    greeting: fullMsg.substring(0, index).trim(),
+                    invitation: fullMsg.substring(index).trim()
+                };
+            }
+            return {
+                greeting: fullMsg,
+                invitation: "(مستنيينك يوم الجمعة الساعة 7 في اجتماع القديس يوحنا الحبيب)"
+            };
+        }
+
+        // Display a random message
+        function displayRandomMessage(animate = true) {
+            let randomIndex = Math.floor(Math.random() * messages.length);
+            
+            // Avoid repeating the exact message twice in a row if refreshing
+            while (randomIndex === lastIndex && messages.length > 1) {
+                randomIndex = Math.floor(Math.random() * messages.length);
+            }
+            lastIndex = randomIndex;
+
+            const selectedMsg = messages[randomIndex];
+            const parsed = parseMessage(selectedMsg);
+
+            if (animate) {
+                // Apply fade out effect
+                messageBox.classList.add('fade-out');
+                
+                setTimeout(() => {
+                    messageText.textContent = parsed.greeting;
+                    invitationText.textContent = parsed.invitation;
+                    
+                    // Apply fade in effect
+                    messageBox.classList.remove('fade-out');
+                    messageBox.classList.add('fade-in');
+                    
+                    setTimeout(() => {
+                        messageBox.classList.remove('fade-in');
+                    }, 400);
+                }, 400);
+            } else {
+                messageText.textContent = parsed.greeting;
+                invitationText.textContent = parsed.invitation;
+            }
+        }
+
+        // Simple lightweight Canvas Confetti Effect
+        let confetti = [];
+        const confettiColors = ['#f472b6', '#fbbf24', '#c084fc', '#818cf8', '#60a5fa', '#f59e0b', '#ec4899'];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class ConfettiParticle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 8 + 4;
+                this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                this.speedX = Math.random() * 6 - 3;
+                this.speedY = Math.random() * -10 - 5;
+                this.gravity = 0.4;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 10 - 5;
+                this.opacity = 1;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.speedY += this.gravity;
+                this.rotation += this.rotationSpeed;
+                this.opacity -= 0.015;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                
+                // Draw a small diamond/square
+                ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                ctx.restore();
+            }
+        }
+
+        function createConfettiBurst() {
+            const rect = btnRefresh.getBoundingClientRect();
+            // Origin point is center of the button
+            const originX = rect.left + rect.width / 2;
+            const originY = rect.top + rect.height / 2;
+
+            for (let i = 0; i < 40; i++) {
+                confetti.push(new ConfettiParticle(originX, originY));
+            }
+        }
+
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = confetti.length - 1; i >= 0; i--) {
+                const p = confetti[i];
+                p.update();
+                p.draw();
+                
+                if (p.opacity <= 0 || p.y > canvas.height) {
+                    confetti.splice(i, 1);
+                }
+            }
+            
+            requestAnimationFrame(animateConfetti);
+        }
+
+        // Start confetti animation loop
+        animateConfetti();
+
+        // Event listener for refresh button
+        btnRefresh.addEventListener('click', () => {
+            displayRandomMessage(true);
+            createConfettiBurst();
         });
+
+        // Dark Mode / Light Mode toggle logic
+        const btnThemeToggle = document.getElementById('btn-theme-toggle');
+        
+        // Check for saved theme preferences, otherwise use light mode as default
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark');
+        }
+
+        btnThemeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            if (document.body.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Initialize with a random message on load (no fade animation for instant feel on first load)
+        displayRandomMessage(false);
     </script>
 </body>
 </html>
